@@ -15,7 +15,7 @@ namespace MonitorService.Repository
             countByTag = new ConcurrentDictionary<string, TagDto>();
         }
 
-        public ConcurrentDictionary<string, TagDto> getAllCountByTag()
+        public IReadOnlyDictionary<string, TagDto> getAllCountByTag()
         {
             return countByTag;
         }

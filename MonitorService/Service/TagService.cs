@@ -16,9 +16,8 @@ namespace MonitorService.Service
             this.tagRepository = tagRepository;
         }
 
-        public List<TagDto> getTop10Tags()
+        public virtual List<TagDto> getTop10Tags()
         {
-            //TODO: update to handle very large set. Do not want to sort every time
             return this.tagRepository
                 .getAllCountByTag()
                 .OrderByDescending(kp => kp.Value.count)

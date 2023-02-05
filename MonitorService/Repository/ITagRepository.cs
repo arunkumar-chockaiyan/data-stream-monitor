@@ -6,6 +6,6 @@ namespace MonitorService.Repository
     public interface ITagRepository
     {
         void incrementTagCount(string tag);
-        ConcurrentDictionary<string, TagDto> getAllCountByTag();
+        IReadOnlyDictionary<string, TagDto> getAllCountByTag();
     }
 }

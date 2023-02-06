@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Routing.Template;
+﻿using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.AspNetCore.Routing.Template;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
@@ -19,6 +21,12 @@ namespace MonitorService.Collections
 
         public FixedSizeDictionary(int maxSize, GetKey getKey)
         {
+            ArgumentNullException.ThrowIfNull(getKey, nameof(getKey));
+            if(maxSize <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxSize), "Value should be more than 0");
+            }
+
             this.maxSize = maxSize;
             this.getKey = getKey;
             this.dictionary = new ConcurrentDictionary<TKey, TValue>(DEFAULT_CONCURRENCY, maxSize);
@@ -41,17 +49,25 @@ namespace MonitorService.Collections
 
         public bool TryAdd(TKey key, Func<TKey, TValue> valueFactory)
         {
-            if(this.dictionary.Count < this.maxSize)
+            ArgumentNullException.ThrowIfNull(valueFactory, nameof(valueFactory));
+
+            if (CanAddNewValue())
             {
                 return this.dictionary.TryAdd(key, valueFactory(key));
             }
             return false;
         }
 
+        private bool CanAddNewValue()
+        {
+            return this.dictionary.Count < this.maxSize;
+        }
 
         public bool TryAdd(TValue value)
         {
-            if (this.dictionary.Count < this.maxSize)
+            ArgumentNullException.ThrowIfNull(value, nameof(value));
+
+            if (CanAddNewValue())
             {
                 return this.dictionary.TryAdd(getKey(value), value);
             }

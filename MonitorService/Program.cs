@@ -34,5 +34,6 @@ static void AddAppServices(WebApplicationBuilder builder)
     builder.Services.AddSingleton<ITweetService, TweetService>();
     builder.Services.AddSingleton<ITweetRepository, InMemTweetRepository>();
     builder.Services.AddSingleton<ITagRepository, InMemTagRepository>();
-    builder.Services.AddSingleton<ITagService, TagService>();
+    builder.Services.AddSingleton<ITopNTagRepository, InMemTopNTagRepository>();
+    builder.Services.AddSingleton<ITagService, TopNTagService>();
 }

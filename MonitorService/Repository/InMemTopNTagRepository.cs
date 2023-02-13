@@ -1,4 +1,5 @@
 ﻿using MonitorService.Collections;
+using MonitorService.Configuration;
 using MonitorService.Dto;
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
@@ -13,15 +14,16 @@ namespace MonitorService.Repository
      */
     public class InMemTopNTagRepository : ITopNTagRepository
     {
-        private readonly int DEFAULT_TOP_LIST_SIZE = 10;//TODO: Make this configurable
-
         private readonly FixedSizeDictionary<string, TagDto> topNTags;
         private readonly IndexedPQ<TagDto, string, long> remainingTags;
+        private readonly MetricsConfig metricsConfig;
 
 
-        public InMemTopNTagRepository()
+        public InMemTopNTagRepository(MetricsConfig metricsConfig)
         {
-            this.topNTags = new FixedSizeDictionary<string, TagDto>(DEFAULT_TOP_LIST_SIZE, (tag) => tag.Tag);
+            this.metricsConfig = metricsConfig;
+            this.topNTags = new FixedSizeDictionary<string, TagDto>(this.metricsConfig.Tags?.TopListSize ?? MetricsConfig.TagsConfig.DEFAULT_TOPLIST_SIZE, 
+                (tag) => tag.Tag);
             this.remainingTags = new IndexedPQ<TagDto, string, long>((tag) => tag.Tag, (tag) => tag.count);
         }
 

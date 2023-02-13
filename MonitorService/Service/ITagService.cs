@@ -5,10 +5,8 @@ namespace MonitorService.Service
     public interface ITagService
     {
         void incrementTagCount(string tag);
-        List<TagDto> getTop10Tags();
+        List<TagDto> getTopNTags();
         void extractAndUpdateTagCount(string text);
 
-        //Possible extension
-        //List<TagDto> getTopNTags(long topCount);
     }
 }

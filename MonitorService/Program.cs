@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+using MonitorService.Configuration;
 using MonitorService.Repository;
 using MonitorService.Service;
 
@@ -10,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+AddAppConfig(builder);
 AddAppServices(builder);
 
 var app = builder.Build();
@@ -29,6 +32,11 @@ app.MapControllers();
 
 app.Run();
 
+static void AddAppConfig(WebApplicationBuilder builder)
+{
+    builder.Services.Configure<MetricsConfig>(builder.Configuration.GetSection(MetricsConfig.SECTION_NAME));
+    builder.Services.AddTransient(_ => _.GetRequiredService<IOptions<MetricsConfig>>().Value);
+}
 static void AddAppServices(WebApplicationBuilder builder)
 {
     builder.Services.AddSingleton<ITweetService, TweetService>();

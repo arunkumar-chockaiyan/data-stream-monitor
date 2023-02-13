@@ -8,6 +8,7 @@ namespace StreamProducerService.Configuration
 {
     public class TwitterConfig
     {
+        public static readonly string SECTION_NAME = "Twitter";
         public Api? api { get; set; }
         public class Api
         {

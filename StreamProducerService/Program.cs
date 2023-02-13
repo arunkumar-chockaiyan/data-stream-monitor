@@ -28,11 +28,11 @@ internal class Program
 
     private static void AddApplicationValidators(HostBuilderContext hostContext, IServiceCollection services)
     {
-        services.Configure<TwitterConfig>(hostContext.Configuration.GetSection("Twitter"));
+        services.Configure<TwitterConfig>(hostContext.Configuration.GetSection(TwitterConfig.SECTION_NAME));
         services.AddTransient(_ => _.GetRequiredService<IOptions<TwitterConfig>>().Value);
         services.AddSingleton<IValidateOptions<TwitterConfig>, TwitterConfigValidator>();
 
-        services.Configure<MonitorServiceConfig>(hostContext.Configuration.GetSection("MonitorService"));
+        services.Configure<MonitorServiceConfig>(hostContext.Configuration.GetSection(MonitorServiceConfig.SECTION_NAME));
         services.AddTransient(_ => _.GetRequiredService<IOptions<MonitorServiceConfig>>().Value);
         services.AddSingleton<IValidateOptions<MonitorServiceConfig>, MonitorServiceConfigValidator>();
     }

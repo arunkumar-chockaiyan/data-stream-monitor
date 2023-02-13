@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization.Infrastructure;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Microsoft.AspNetCore.Routing.Template;
-using System.Collections.Concurrent;
-using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
+﻿using System.Collections.Concurrent;
 
 namespace MonitorService.Collections
 {

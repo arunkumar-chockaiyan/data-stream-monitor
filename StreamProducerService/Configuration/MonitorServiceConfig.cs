@@ -8,6 +8,8 @@ namespace StreamProducerService.Configuration
 {
     public class MonitorServiceConfig
     {
+        public static readonly string SECTION_NAME = "MonitorService";
+
         public string? BaseUrl { get; set; }
     }
 }

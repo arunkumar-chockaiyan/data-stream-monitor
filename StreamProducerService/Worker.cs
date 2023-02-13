@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Options;
-using StreamProducerService.Configuration;
 using StreamProducerService.Service;
 
 namespace StreamProducerService

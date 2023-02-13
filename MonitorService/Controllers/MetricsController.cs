@@ -30,7 +30,7 @@ namespace MonitorService.Controllers
         [HttpGet("toptags")]
         public ActionResult<List<TagDto>> getTopTags()
         {
-            return tagService.getTop10Tags();
+            return tagService.getTopNTags();
         }
     }
 }

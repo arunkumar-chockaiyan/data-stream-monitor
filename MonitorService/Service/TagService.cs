@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using MonitorService.Dto;
 using MonitorService.Repository;
+using MonitorService.Configuration;
 
 namespace MonitorService.Service
 {
@@ -10,13 +11,18 @@ namespace MonitorService.Service
         private static Regex tagPattern = new Regex(@"#[a-zA-Z/_0-9]+");
 
         private readonly ITagRepository tagRepository;
+        private readonly MetricsConfig metricsConfig;
 
-        public TagService(ITagRepository tagRepository)
+        private readonly int topListSize;
+
+        public TagService(ITagRepository tagRepository, MetricsConfig metricsConfig)
         {
             this.tagRepository = tagRepository;
+            this.metricsConfig = metricsConfig;
+            this.topListSize = this.metricsConfig.Tags?.TopListSize ?? MetricsConfig.TagsConfig.DEFAULT_TOPLIST_SIZE;
         }
 
-        public virtual List<TagDto> getTop10Tags()
+        public virtual List<TagDto> getTopNTags()
         {
             return this.tagRepository
                 .getAllCountByTag()
@@ -43,5 +49,6 @@ namespace MonitorService.Service
                 .Distinct()
                 .ToList();
         }
+
     }
 }

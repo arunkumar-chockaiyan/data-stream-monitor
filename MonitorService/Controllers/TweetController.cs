@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MonitorService.Service;
+using System.Net;
 
 namespace MonitorService.Controllers
 {
@@ -29,7 +30,7 @@ namespace MonitorService.Controllers
             catch (Exception e)
             {
                 logger.LogError(e, "Error on saving tweet");
-                return Problem(e.Message, statusCode: 500); //TODO: get traceId and log
+                return Problem(e.Message, statusCode: (int)HttpStatusCode.InternalServerError); //TODO: get traceId and log
             }
 
         }
